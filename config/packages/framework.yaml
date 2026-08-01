@@ -1,6 +1,13 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
+    # survos/deployment-bundle (require-dev) transitively installs symfony/form
+    # as a dev-only dependency. FrameworkBundle's default form-enabled check and
+    # TwigBundle's own willBeAvailable('symfony/form', ...) check disagree about
+    # a dev-only package (see ContainerBuilder::willBeAvailable's prod/dev split),
+    # so without this explicit `false` the container fails to compile with
+    # "non-existent service twig.extension.form". Nothing in this app uses forms.
+    form: false
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
