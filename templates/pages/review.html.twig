@@ -1,0 +1,33 @@
+{#
+    Fetched via XHR by Framework7's router (see start.html.twig's `routes`
+    value) and inserted as page content — this is a `.page` fragment, not a
+    full HTML document. The controller sits directly on `.page` because F7's
+    page:init/page:afterin DOM events are dispatched (and bubble from) the
+    `.page` element itself — a listener on a descendant would never see them.
+#}
+<div class="page" data-name="review" {{ stimulus_controller('review') }}>
+    <div class="navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner sliding">
+            <div class="title">Review</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="flip-card-stage">
+            <div class="flip-card" {{ stimulus_target('review', 'card') }} {{ stimulus_action('review', 'flip', 'click') }}>
+                <div class="flip-card-inner">
+                    <div class="flip-card-face flip-card-front" {{ stimulus_target('review', 'front') }}></div>
+                    <div class="flip-card-face flip-card-back" {{ stimulus_target('review', 'back') }}></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grade-buttons">
+            <button type="button" class="button button-large button-fill color-red"
+                    {{ stimulus_action('review', 'grade', 'click', {correct: false}) }}>Again</button>
+            <button type="button" class="button button-large button-fill color-green"
+                    {{ stimulus_action('review', 'grade', 'click', {correct: true}) }}>Got it</button>
+        </div>
+    </div>
+</div>
