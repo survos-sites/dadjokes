@@ -22,7 +22,7 @@
         "spomky-labs/pwa-bundle": "*",
         "survos/atlas-bundle": "*",
         "survos/fw-bundle": "^2.17",
-        "survos/js-twig-bundle": "^2.17",
+        "survos/js-twig-bundle": "^2.18.4",
         "survos/kit-bundle": "*",
         "survos/mobile-bundle": "dev-main",
         "symfony/asset": "8.1.*",

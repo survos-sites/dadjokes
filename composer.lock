@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2e50432df4c95d105b47797e732129a",
+    "content-hash": "6d293d645fda0fa910416bf5579cfc2c",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -3329,16 +3329,16 @@
         },
         {
             "name": "survos/js-twig-bundle",
-            "version": "2.17.6",
+            "version": "2.18.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/js-twig-bundle.git",
-                "reference": "3d21c53021fc0e65be1c964bc31466202d46adde"
+                "reference": "d2852b57eeacaa3fee0dc72a50b60bd40d1f53c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/js-twig-bundle/zipball/3d21c53021fc0e65be1c964bc31466202d46adde",
-                "reference": "3d21c53021fc0e65be1c964bc31466202d46adde",
+                "url": "https://api.github.com/repos/survos/js-twig-bundle/zipball/d2852b57eeacaa3fee0dc72a50b60bd40d1f53c4",
+                "reference": "d2852b57eeacaa3fee0dc72a50b60bd40d1f53c4",
                 "shasum": ""
             },
             "require": {
@@ -3375,7 +3375,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/js-twig-bundle/issues",
-                "source": "https://github.com/survos/js-twig-bundle/tree/2.17.6"
+                "source": "https://github.com/survos/js-twig-bundle/tree/2.18.4"
             },
             "funding": [
                 {
@@ -3383,7 +3383,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-29T14:04:27+00:00"
+            "time": "2026-08-01T16:44:12+00:00"
         },
         {
             "name": "survos/kit-bundle",
