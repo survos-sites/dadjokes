@@ -134,6 +134,12 @@
                 "fetch": "lazy",
                 "autoimport": []
             }
+        },
+        "@survos/mobile-bundle": {
+            "app": {
+                "enabled": true,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []

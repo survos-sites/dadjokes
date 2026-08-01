@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cde86bfdfe988451458afea921cebbc",
+    "content-hash": "e2e50432df4c95d105b47797e732129a",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -3443,6 +3443,69 @@
                 }
             ],
             "time": "2026-07-23T11:04:17+00:00"
+        },
+        {
+            "name": "survos/mobile-bundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/mobile-bundle.git",
+                "reference": "9e4687cf91351db9fe96efa10480e6de8c97d7a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/mobile-bundle/zipball/9e4687cf91351db9fe96efa10480e6de8c97d7a2",
+                "reference": "9e4687cf91351db9fe96efa10480e6de8c97d7a2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.5",
+                "survos/atlas-bundle": "*",
+                "survos/fw-bundle": "*",
+                "survos/js-twig-bundle": "*",
+                "survos/kit-bundle": "^2.5",
+                "symfony/config": "^8.1",
+                "symfony/dependency-injection": "^8.1",
+                "symfony/http-kernel": "^8.1",
+                "symfony/routing": "^8.1",
+                "symfony/ux-icons": "^2.29 || ^3.0",
+                "symfony/ux-twig-component": "^3",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "symfony/browser-kit": "^8.1",
+                "symfony/framework-bundle": "^8.1",
+                "symfony/phpunit-bridge": "^8.1",
+                "symfony/security-bundle": "^8.1",
+                "symfony/twig-bundle": "^8.1",
+                "symfony/var-dumper": "^8.1"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\MobileBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Declarative #[MobilePage] app pages + generic Framework7/Dexie app-shell wiring for Symfony mobile PWAs",
+            "keywords": [
+                "symfony-ux"
+            ],
+            "support": {
+                "source": "https://github.com/survos/mobile-bundle/tree/main",
+                "issues": "https://github.com/survos/mobile-bundle/issues"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/kbond"
+                }
+            ],
+            "time": "2026-08-01T15:04:25+00:00"
         },
         {
             "name": "symfony/asset",
@@ -8363,7 +8426,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "survos/mobile-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
