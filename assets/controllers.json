@@ -54,7 +54,7 @@
                 "fetch": "eager"
             },
             "install": {
-                "enabled": false,
+                "enabled": true,
                 "fetch": "eager"
             },
             "network-information": {

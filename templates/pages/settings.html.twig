@@ -32,6 +32,16 @@
                 <button type="button" class="button button-small color-red" {{ stimulus_action('settings', 'resetProgress', 'click') }}>Reset</button>
             </div>
 
+            <h3>Data</h3>
+            <div class="settings-row">
+                <span>Refresh local data from the server</span>
+                {# DbUtilities (js-twig-bundle) auto-wires any #refreshDatabase
+                   element — deletes the local Dexie db and reloads, re-fetching
+                   jokes fresh. Same mechanism rut/rutado uses. Deliberately not
+                   a Stimulus action: this is fw-bundle's own convention. #}
+                <a href="#" id="refreshDatabase" class="button button-small">Refresh</a>
+            </div>
+
             <h3>Manage</h3>
             <div class="settings-row">
                 <span>Add, edit, or remove jokes</span>

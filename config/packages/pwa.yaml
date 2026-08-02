@@ -1,5 +1,30 @@
 # Documentation available at https://pwa.spomky-labs.com/
-## Please add the favicons, manifest or serviceworker sections depending on your needs.
 pwa:
-    asset_compiler: false # Default to true. Will change to false in 2.0.0.
-    #image_processor: 'pwa.image_processor.imagick' # Or 'pwa.image_processor.gd'
+    asset_compiler: true
+    image_processor: 'pwa.image_processor.imagick'
+
+    favicons:
+        enabled: true
+        default:
+            src: icon/app-icon.svg
+            background_color: '#007aff'
+
+    manifest:
+        enabled: true
+        name: 'Dad Jokes'
+        short_name: 'Dad Jokes'
+        description: 'A flashcard app for memorizing dad jokes.'
+        display: standalone
+        theme_color: '#007aff'
+        background_color: '#ffffff'
+        start_url:
+            path: app_start
+        # TODO: manifest.icons referencing icon/app-icon.svg fails
+        # ImagickImageProcessor ("Failed to get the image contents") when
+        # combined with favicons.default using the same source — needs
+        # investigation upstream or a separate source file per size. Browser
+        # tab icon + apple-touch-icon still work fine via favicons below;
+        # this only affects the PWA install-prompt's icon strictness.
+
+    serviceworker:
+        enabled: true
