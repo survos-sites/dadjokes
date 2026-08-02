@@ -1,13 +1,18 @@
 # Documentation available at https://pwa.spomky-labs.com/
 pwa:
     asset_compiler: true
-    image_processor: 'pwa.image_processor.imagick'
 
+    # Favicons/icon generation needs an image processor, and neither ext-gd
+    # nor ext-imagick is available on the Dokku host's PHP build (confirmed
+    # via `dokku run dadjokes php -m` — neither extension is present), and
+    # locally-available GD can't rasterize SVG anyway ("Data is not in a
+    # recognized format"). Left disabled until we either add ext-gd/ext-imagick
+    # to composer.json (heroku-buildpack-php installs ext-* requirements) and
+    # confirm SVG support, or switch to a pre-rasterized PNG source.
     favicons:
-        enabled: true
+        enabled: false
         default:
             src: icon/app-icon.svg
-            background_color: '#007aff'
 
     manifest:
         enabled: true
@@ -19,12 +24,10 @@ pwa:
         background_color: '#ffffff'
         start_url:
             path: app_start
-        # TODO: manifest.icons referencing icon/app-icon.svg fails
-        # ImagickImageProcessor ("Failed to get the image contents") when
-        # combined with favicons.default using the same source — needs
-        # investigation upstream or a separate source file per size. Browser
-        # tab icon + apple-touch-icon still work fine via favicons below;
-        # this only affects the PWA install-prompt's icon strictness.
+        # No icons: without ext-gd/ext-imagick to generate them (see above),
+        # an empty icons array is safer than a manifest pointing at files
+        # that don't exist — Chrome's install-prompt heuristics just won't
+        # fire without valid icons, which is honest given the current state.
 
     serviceworker:
         enabled: true
