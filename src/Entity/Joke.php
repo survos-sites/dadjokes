@@ -39,10 +39,16 @@ class Joke
     #[Groups(['joke:read'])]
     private string $joke;
 
-    public function __construct(string $keyword, string $joke)
+    /** Deck/set this card belongs to — e.g. "classic", "animals", "food". Lets the app switch sets. */
+    #[ORM\Column(length: 32)]
+    #[Groups(['joke:read'])]
+    private string $category = 'classic';
+
+    public function __construct(string $keyword, string $joke, string $category = 'classic')
     {
         $this->keyword = $keyword;
         $this->joke = $joke;
+        $this->category = $category;
     }
 
     public function getId(): ?int
@@ -55,8 +61,34 @@ class Joke
         return $this->keyword;
     }
 
+    public function setKeyword(string $keyword): static
+    {
+        $this->keyword = $keyword;
+
+        return $this;
+    }
+
     public function getJoke(): string
     {
         return $this->joke;
+    }
+
+    public function setJoke(string $joke): static
+    {
+        $this->joke = $joke;
+
+        return $this;
+    }
+
+    public function getCategory(): string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): static
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }

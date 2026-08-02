@@ -1,0 +1,15 @@
+{% extends 'admin/_layout.html.twig' %}
+
+{% block title (isNew ? 'New joke' : 'Edit ' ~ joke.keyword) ~ ' — Admin' %}
+
+{% block admin_content %}
+    <p><a href="{{ path('admin_joke_index') }}">← Back to list</a></p>
+    <h2>{{ isNew ? 'New joke' : 'Edit "' ~ joke.keyword ~ '"' }}</h2>
+
+    {{ form_start(form) }}
+        <div class="form-row">{{ form_row(form.keyword) }}</div>
+        <div class="form-row">{{ form_row(form.joke) }}</div>
+        <div class="form-row">{{ form_row(form.category) }}</div>
+        {{ form_widget(form.save, {attr: {class: 'btn btn-primary'}}) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -5,8 +5,9 @@ survos_fw:
         dadjokes:
             code: dadjokes
             name: Dad Jokes
-            tabs: [study]
+            tabs: [study, cards, settings]
             database: dadjokes
             stores:
                 - { name: jokes, schema: id, url: /api/jokes }
                 - { name: progress, schema: id, url: null }
+                - { name: stats, schema: id, url: null }

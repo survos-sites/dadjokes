@@ -1,0 +1,41 @@
+{% extends 'admin/_layout.html.twig' %}
+
+{% block title 'Jokes — Admin' %}
+
+{% block admin_content %}
+    <div class="toolbar">
+        <span>{{ jokes|length }} joke(s)</span>
+        <a href="{{ path('admin_joke_new') }}" class="btn btn-primary">+ New joke</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Keyword</th>
+                <th>Joke</th>
+                <th>Category</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for joke in jokes %}
+                <tr>
+                    <td>{{ joke.keyword }}</td>
+                    <td>{{ joke.joke }}</td>
+                    <td><span class="badge">{{ joke.category }}</span></td>
+                    <td>
+                        <div class="actions">
+                            <a href="{{ path('admin_joke_edit', {id: joke.id}) }}" class="btn">Edit</a>
+                            <form class="inline" method="post" action="{{ path('admin_joke_delete', {id: joke.id}) }}" onsubmit="return confirm('Delete &quot;{{ joke.keyword|e('js') }}&quot;?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete-joke-' ~ joke.id) }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4">No jokes yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

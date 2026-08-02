@@ -20,15 +20,35 @@ final class AppController extends AbstractController
     #[Route('/', name: 'app_start')]
     public function start(): Response
     {
-        return $this->render('start.html.twig', [
-            'fwConfig' => $this->fwService->getConfig(),
-        ]);
+        return $this->render('start.html.twig', $this->shellContext());
     }
 
     #[Route('/pages/review', name: 'app_review')]
     #[MobilePage(title: 'Review', icon: 'tabler:cards', tab: 'study')]
     public function review(): Response
     {
-        return $this->render('pages/review.html.twig');
+        return $this->render('pages/review.html.twig', $this->shellContext());
+    }
+
+    #[Route('/pages/cards', name: 'app_cards')]
+    #[MobilePage(title: 'Cards', icon: 'tabler:list', tab: 'cards')]
+    public function cards(): Response
+    {
+        return $this->render('pages/cards.html.twig', $this->shellContext());
+    }
+
+    #[Route('/pages/settings', name: 'app_settings')]
+    #[MobilePage(title: 'Settings', icon: 'tabler:settings', tab: 'settings')]
+    public function settings(): Response
+    {
+        return $this->render('pages/settings.html.twig', $this->shellContext());
+    }
+
+    /** @return array<string, mixed> */
+    private function shellContext(): array
+    {
+        return [
+            'fwConfig' => $this->fwService->getConfig(),
+        ];
     }
 }

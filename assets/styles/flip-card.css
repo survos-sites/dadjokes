@@ -51,7 +51,7 @@
 
 .grade-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     padding: 1rem;
     max-width: 360px;
     margin: 0 auto;
@@ -59,4 +59,12 @@
 
 .grade-buttons .button {
     flex: 1;
+    font-size: 0.8rem;
+}
+
+.review-meta {
+    text-align: center;
+    color: var(--f7-text-color-secondary, #6d6d72);
+    font-size: 0.85rem;
+    padding-top: 0.5rem;
 }

@@ -1,0 +1,25 @@
+{#
+    Shared F7 app shell. Each top-level page (start/cards/settings) extends
+    this and fills {% block page %}. Full server-side page loads, not F7's
+    XHR router — simpler and robust for a 3-tab app; re-navigating just
+    re-runs mobile_app_controller.js's initialize(), which is a fast no-op
+    once Dexie is already populated (DbUtilities checks table counts first).
+#}
+{% extends "@SurvosFw/base.html.twig" %}
+
+{% block title 'Dad Jokes' %}
+
+{% block body %}
+    <div id="app" {{ stimulus_controller(survos_stimulus('mobile-bundle', 'app'), {
+        name: 'DadJokes',
+        configCode: 'dadjokes',
+        config: fwConfig,
+        locale: app.request.locale,
+    }) }}>
+        <div class="view view-main view-init safe-areas">
+            {% block page %}{% endblock %}
+        </div>
+
+        {% include '@SurvosMobile/tabbar.html.twig' %}
+    </div>
+{% endblock %}

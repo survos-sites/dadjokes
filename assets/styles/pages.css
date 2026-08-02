@@ -1,0 +1,75 @@
+/* Cards + Settings pages */
+
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.75rem 1rem 0.25rem;
+}
+
+.cards-list {
+    padding: 0.5rem 1rem 2rem;
+}
+
+.card-row {
+    background: var(--f7-page-bg-color, #fff);
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.6rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+}
+
+.card-row-front {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.card-row-category {
+    font-weight: 400;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--f7-text-color-secondary, #6d6d72);
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    padding: 0.1rem 0.5rem;
+}
+
+.card-row-back {
+    display: none;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--f7-text-color-secondary, #6d6d72);
+}
+
+.card-row.open .card-row-back {
+    display: block;
+}
+
+.settings-section {
+    padding: 1rem;
+}
+
+.settings-section h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--f7-text-color-secondary, #6d6d72);
+    margin: 1rem 0 0.5rem;
+}
+
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--f7-page-bg-color, #fff);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.settings-row input[type="range"] {
+    width: 140px;
+}

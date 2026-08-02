@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+    h1 { font-size: 1.4rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
+    th { font-size: 0.75rem; text-transform: uppercase; color: #666; }
+    .badge { background: #eee; border-radius: 6px; padding: 0.1rem 0.5rem; font-size: 0.75rem; }
+    .btn { display: inline-block; padding: 0.4rem 0.9rem; border-radius: 6px; text-decoration: none; border: 1px solid #ccc; color: #1a1a1a; font-size: 0.85rem; cursor: pointer; background: #fff; }
+    .btn-primary { background: #007aff; color: #fff; border-color: #007aff; }
+    .btn-danger { background: #ff3b30; color: #fff; border-color: #ff3b30; }
+    .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .flash { background: #e6f7e6; border: 1px solid #b3e0b3; padding: 0.5rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+    form.inline { display: inline; }
+    .form-row { margin-bottom: 1rem; }
+    .form-row label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+    .form-row input[type=text], .form-row textarea { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
+    .actions { display: flex; gap: 0.5rem; }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="toolbar">
+        <h1><a href="{{ path('admin_joke_index') }}" style="color:inherit;text-decoration:none;">🃏 Dad Jokes Admin</a></h1>
+        <a href="{{ path('app_start') }}" class="btn">View app →</a>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
+
+    {% block admin_content %}{% endblock %}
+{% endblock %}

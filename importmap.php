@@ -47,4 +47,5 @@ return [
     '@tacman1123/twig-browser' => ['version' => '1.0.0'],
     '@tacman1123/twig-browser/src/compat/compileTwigBlocks.js' => ['version' => '1.0.0'],
     '@tacman1123/twig-browser/adapters/symfony' => ['version' => '1.0.0'],
+    'ts-fsrs' => ['version' => '5.4.1'],
 ];

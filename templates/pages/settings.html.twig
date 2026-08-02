@@ -1,0 +1,43 @@
+{% extends '_shell.html.twig' %}
+
+{% block page %}
+<div class="page" data-name="settings" {{ stimulus_controller('settings') }}>
+    <div class="navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner sliding">
+            <div class="title">Settings</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="settings-section">
+            <h3>Study set</h3>
+            <div class="settings-row">
+                <span>Category</span>
+                <select {{ stimulus_target('settings', 'category') }} {{ stimulus_action('settings', 'setCategory', 'change') }}></select>
+            </div>
+
+            <h3>Scheduling</h3>
+            <div class="settings-row">
+                <span>Desired retention: <strong {{ stimulus_target('settings', 'retentionLabel') }}></strong></span>
+                <input type="range" min="0.70" max="0.97" step="0.01"
+                       {{ stimulus_target('settings', 'retention') }}
+                       {{ stimulus_action('settings', 'setRetention', 'input') }}>
+            </div>
+
+            <h3>Progress</h3>
+            <div class="settings-row" {{ stimulus_target('settings', 'stats') }}></div>
+            <div class="settings-row">
+                <span>Reset all review progress</span>
+                <button type="button" class="button button-small color-red" {{ stimulus_action('settings', 'resetProgress', 'click') }}>Reset</button>
+            </div>
+
+            <h3>Manage</h3>
+            <div class="settings-row">
+                <span>Add, edit, or remove jokes</span>
+                <a href="{{ path('admin_joke_index') }}" class="button button-small">Open admin</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends '_shell.html.twig' %}
+
+{% block page %}
+<div class="page" data-name="cards" {{ stimulus_controller('cards') }}>
+    <div class="navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner sliding">
+            <div class="title">Cards</div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="category-filter" {{ stimulus_target('cards', 'filter') }}></div>
+        <div class="cards-list" {{ stimulus_target('cards', 'list') }}></div>
+    </div>
+</div>
+{% endblock %}
