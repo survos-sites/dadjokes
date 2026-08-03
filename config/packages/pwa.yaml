@@ -1,18 +1,13 @@
 # Documentation available at https://pwa.spomky-labs.com/
 pwa:
     asset_compiler: true
+    image_processor: 'pwa.image_processor.imagick'
 
-    # Favicons/icon generation needs an image processor, and neither ext-gd
-    # nor ext-imagick is available on the Dokku host's PHP build (confirmed
-    # via `dokku run dadjokes php -m` — neither extension is present), and
-    # locally-available GD can't rasterize SVG anyway ("Data is not in a
-    # recognized format"). Left disabled until we either add ext-gd/ext-imagick
-    # to composer.json (heroku-buildpack-php installs ext-* requirements) and
-    # confirm SVG support, or switch to a pre-rasterized PNG source.
     favicons:
-        enabled: false
+        enabled: true
         default:
             src: icon/app-icon.svg
+            background_color: '#007aff'
 
     manifest:
         enabled: true
@@ -24,10 +19,15 @@ pwa:
         background_color: '#ffffff'
         start_url:
             path: app_start
-        # No icons: without ext-gd/ext-imagick to generate them (see above),
-        # an empty icons array is safer than a manifest pointing at files
-        # that don't exist — Chrome's install-prompt heuristics just won't
-        # fire without valid icons, which is honest given the current state.
+        # manifest.icons referencing the SVG source directly fails
+        # ImagickImageProcessor ("Failed to get the image contents"), even
+        # alone with favicons disabled — that pipeline apparently doesn't
+        # rasterize SVG the way favicons.default does. Pre-rasterized PNGs
+        # (generated once via `php -r '...Imagick...'`, see git history)
+        # sidestep it.
+        icons:
+            - { src: icon/app-icon-192.png, sizes: [192], type: image/png }
+            - { src: icon/app-icon-512.png, sizes: [512], type: image/png }
 
     serviceworker:
         enabled: true
