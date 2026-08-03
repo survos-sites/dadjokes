@@ -3697,12 +3697,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/mobile-bundle.git",
-                "reference": "9e4687cf91351db9fe96efa10480e6de8c97d7a2"
+                "reference": "aee8a8fed2ae70fa8e5c7114425fbea5e89273f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/mobile-bundle/zipball/9e4687cf91351db9fe96efa10480e6de8c97d7a2",
-                "reference": "9e4687cf91351db9fe96efa10480e6de8c97d7a2",
+                "url": "https://api.github.com/repos/survos/mobile-bundle/zipball/aee8a8fed2ae70fa8e5c7114425fbea5e89273f2",
+                "reference": "aee8a8fed2ae70fa8e5c7114425fbea5e89273f2",
                 "shasum": ""
             },
             "require": {
@@ -3728,6 +3728,10 @@
                 "symfony/twig-bundle": "^8.1",
                 "symfony/var-dumper": "^8.1"
             },
+            "suggest": {
+                "ext-imagick": "Only if spomky-labs/pwa-bundle's favicon/icon generation is enabled — it needs a real image processor with SVG rasterization support. ext-gd is NOT sufficient (no SVG support). This really belongs as a suggestion on spomky-labs/pwa-bundle itself, not here — noted locally until that lands upstream. Heroku/Dokku's default php buildpack does not install it; add it to your app's own composer.json require to get the buildpack to install it.",
+                "spomky-labs/pwa-bundle": "For installable/offline PWA support (manifest, service worker) — not required, most mobile-bundle apps don't need it."
+            },
             "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
@@ -3743,7 +3747,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/survos/mobile-bundle/tree/main",
+                "source": "https://github.com/survos/mobile-bundle/tree/2.18.7",
                 "issues": "https://github.com/survos/mobile-bundle/issues"
             },
             "funding": [
@@ -3752,7 +3756,7 @@
                     "url": "https://github.com/kbond"
                 }
             ],
-            "time": "2026-08-01T15:04:25+00:00"
+            "time": "2026-08-02T23:43:01+00:00"
         },
         {
             "name": "symfony/asset",

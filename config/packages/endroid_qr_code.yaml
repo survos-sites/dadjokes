@@ -1,0 +1,11 @@
+# endroid/qr-code v7 only ships GD-based raster writers (PngWriter/GifWriter/
+# WebPWriter all extend AbstractGdWriter) — no Imagick writer exists to switch
+# to. SvgWriter needs neither GD nor Imagick (pure XML), so QR generation adds
+# zero extension dependencies instead of needing a second one alongside
+# ext-imagick (used for PWA favicon/manifest-icon generation).
+endroid_qr_code:
+    builders:
+        default:
+            writer: 'Endroid\QrCode\Writer\SvgWriter'
+            size: 300
+            margin: 10
