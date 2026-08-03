@@ -55,14 +55,9 @@
                         <p class="text-center text-secondary small mt-2">
                             Live app, not a screenshot — try it right here.
                         </p>
-                        <figure class="text-center mt-3">
-                            <a href="{{ appUrl }}">
-                                <img src="{{ qr_code_url(appUrl) }}" alt="QR code to open Dad Jokes on your phone" style="max-width: 150px">
-                            </a>
-                            <figcaption class="text-secondary small mt-1">
-                                Scan to open on your phone
-                            </figcaption>
-                        </figure>
+                        <div class="mt-3">
+                            <twig:SurvosFw:Ks:QrCode data="{{ appUrl }}" alt="QR code to open Dad Jokes on your phone" />
+                        </div>
                     </div>
                 </div>
             </div>
