@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cee0af5faf63a39edda1ad8c7e1835e6",
+    "content-hash": "f053d7af5cdd7f1cc80625eff59559f4",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -3503,19 +3503,20 @@
         },
         {
             "name": "survos/fw-bundle",
-            "version": "2.17.6",
+            "version": "2.18.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/fw-bundle.git",
-                "reference": "91a32407b60acec471313d58e46d7141e23fe85a"
+                "reference": "ac336dd1c8b34a7c5b8f1141a645515666e0bc50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/fw-bundle/zipball/91a32407b60acec471313d58e46d7141e23fe85a",
-                "reference": "91a32407b60acec471313d58e46d7141e23fe85a",
+                "url": "https://api.github.com/repos/survos/fw-bundle/zipball/ac336dd1c8b34a7c5b8f1141a645515666e0bc50",
+                "reference": "ac336dd1c8b34a7c5b8f1141a645515666e0bc50",
                 "shasum": ""
             },
             "require": {
+                "endroid/qr-code-bundle": "^7.0",
                 "knplabs/knp-menu-bundle": "^3.2",
                 "php": "^8.5",
                 "survos/kit-bundle": "^2.5",
@@ -3563,7 +3564,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/fw-bundle/issues",
-                "source": "https://github.com/survos/fw-bundle/tree/2.17.6"
+                "source": "https://github.com/survos/fw-bundle/tree/2.18.7"
             },
             "funding": [
                 {
@@ -3571,7 +3572,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-29T14:03:42+00:00"
+            "time": "2026-08-03T13:27:58+00:00"
         },
         {
             "name": "survos/js-twig-bundle",
