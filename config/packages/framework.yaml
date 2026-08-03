@@ -1,6 +1,20 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
+parameters:
+    # Default for the TRUSTED_PROXIES env var: the dokku/Docker reverse proxy reaches the app over
+    # the private Docker network, so trust the private ranges. Override TRUSTED_PROXIES in prod if
+    # it moves. Same pattern as zm/md/rutado's framework.yaml.
+    default_trusted_proxies: 'private_ranges'
+
 framework:
     secret: '%env(APP_SECRET)%'
+
+    # Production dadjokes runs behind the dokku/Docker proxy (TLS terminated upstream). Without
+    # trusting it, Symfony ignores `X-Forwarded-Proto: https` and builds http:// absolute URLs --
+    # e.g. the homepage's QR code would encode an http:// URL instead of https://. Trusting the
+    # proxy + forwarded headers restores the real https scheme.
+    trusted_proxies: '%env(default:default_trusted_proxies:TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+
     # symfony/form is now a real (non-dev) dependency (admin CRUD forms), so
     # this can auto-detect true — no more prod/dev willBeAvailable() mismatch.
     form: true
