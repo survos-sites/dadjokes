@@ -1728,6 +1728,11 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     enable_profiler?: bool|Param, // Whether or not to enable the profiler collector to calculate and visualize migration status. This adds some queries overhead. // Default: false
  *     transactional?: bool|Param, // Whether or not to wrap migrations in a single transaction. // Default: true
  * }
+ * @psalm-type EndroidQrCodeConfig = array{
+ *     route_prefix?: scalar|Param|null, // Default: "/qr-code"
+ *     route_enabled?: bool|Param, // Default: true
+ *     builders?: array<string, array<string, mixed>>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1744,6 +1749,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     api_platform?: ApiPlatformConfig,
  *     doctrine?: DoctrineConfig,
  *     doctrine_migrations?: DoctrineMigrationsConfig,
+ *     endroid_qr_code?: EndroidQrCodeConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1761,6 +1767,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         api_platform?: ApiPlatformConfig,
  *         doctrine?: DoctrineConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *         endroid_qr_code?: EndroidQrCodeConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1778,6 +1785,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         api_platform?: ApiPlatformConfig,
  *         doctrine?: DoctrineConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *         endroid_qr_code?: EndroidQrCodeConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1796,6 +1804,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         api_platform?: ApiPlatformConfig,
  *         doctrine?: DoctrineConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *         endroid_qr_code?: EndroidQrCodeConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
