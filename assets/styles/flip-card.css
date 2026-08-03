@@ -68,3 +68,39 @@
     font-size: 0.85rem;
     padding-top: 0.5rem;
 }
+
+.review-toolbar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem 0;
+}
+
+.keyboard-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--f7-text-color-secondary, #6d6d72);
+    padding-top: 0.5rem;
+}
+
+/* Learn mode: both sides shown at once, stacked, no flip needed — for
+   cramming new material fast rather than testing recall. */
+.flip-card.learn-mode {
+    height: auto;
+    cursor: default;
+}
+
+.flip-card.learn-mode .flip-card-inner {
+    position: static;
+    transform: none !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.flip-card.learn-mode .flip-card-face {
+    position: static;
+    transform: none !important;
+    backface-visibility: visible;
+}

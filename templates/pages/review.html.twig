@@ -18,6 +18,12 @@
     <div class="page-content">
         <div class="review-meta" {{ stimulus_target('review', 'remaining') }}></div>
 
+        <div class="review-toolbar">
+            <button type="button" class="button button-small" {{ stimulus_target('review', 'learnToggle') }} {{ stimulus_action('review', 'toggleLearnMode', 'click') }}>Learn: Off</button>
+            <button type="button" class="button button-small" {{ stimulus_action('review', 'speakCurrent', 'click') }}>🔊 Speak</button>
+            <button type="button" class="button button-small" {{ stimulus_target('review', 'playToggle') }} {{ stimulus_action('review', 'toggleAutoPlay', 'click') }}>▶ Play all</button>
+        </div>
+
         <div class="flip-card-stage">
             <div class="flip-card" {{ stimulus_target('review', 'card') }} {{ stimulus_action('review', 'flip', 'click') }}>
                 <div class="flip-card-inner">
@@ -26,6 +32,8 @@
                 </div>
             </div>
         </div>
+
+        <div class="keyboard-hint">↑ Good &nbsp; ↓ Again &nbsp; ← → Browse all</div>
 
         {# FSRS ratings: Again=1, Hard=2, Good=3, Easy=4 — see assets/lib/fsrs.js #}
         <div class="grade-buttons">
