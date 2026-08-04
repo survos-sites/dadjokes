@@ -1,12 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
 import { emptyCard, grade, Rating } from '../lib/fsrs.js';
 
-/** Mirrors the API's order: little_kids first (safe/universal), then by rating desc, then manual sortOrder. */
+/** Mirrors the API's order: little_kids first (safe/universal), then Tac's manually-curated sortOrder within that group. */
 function byBrowseOrder(a, b) {
     if (a.ageGroup !== b.ageGroup) {
         return a.ageGroup === 'little_kids' ? -1 : 1;
     }
-    return b.rating - a.rating || a.sortOrder - b.sortOrder;
+    return a.sortOrder - b.sortOrder;
 }
 
 /*

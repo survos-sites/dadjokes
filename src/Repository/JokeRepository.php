@@ -18,14 +18,17 @@ final class JokeRepository extends ServiceEntityRepository
 
     /**
      * little_kids first (they're the safe, universal bucket — a little-kids
-     * joke also works on big kids, never the reverse), then by rating
-     * (highest-confidence jokes first), then sortOrder as a manual tiebreak.
+     * joke also works on big kids, never the reverse), then sortOrder — the
+     * admin's ↑/↓ arrows, i.e. Tac's manually-curated performance set within
+     * that age group. Star rating is a separate axis (confidence/print
+     * filter), not part of this ordering — it stopped driving position once
+     * ↑/↓ became a dedicated reorder control.
      *
      * @return list<Joke>
      */
     public function findAllOrdered(): array
     {
-        return $this->findBy([], ['ageGroup' => 'DESC', 'rating' => 'DESC', 'sortOrder' => 'ASC']);
+        return $this->findBy([], ['ageGroup' => 'DESC', 'sortOrder' => 'ASC']);
     }
 
     public function nextSortOrder(): int

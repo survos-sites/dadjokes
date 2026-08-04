@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Print jokes — Admin' %}
+
+{% block stylesheets %}
+<style>
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 1.5rem auto; padding: 0 1rem; color: #1a1a1a; }
+    .toolbar { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; }
+    .btn { display: inline-block; padding: 0.4rem 0.9rem; border-radius: 6px; text-decoration: none; border: 1px solid #ccc; color: #1a1a1a; font-size: 0.85rem; cursor: pointer; background: #fff; }
+    .btn-primary { background: #007aff; color: #fff; border-color: #007aff; }
+    .btn.active { background: #eee; font-weight: 600; }
+    .subtitle { color: #666; font-size: 0.85rem; margin: 0 0 1rem; }
+    h1 { font-size: 1.3rem; margin: 0 0 0.25rem; }
+    h2 { font-size: 1.05rem; margin: 1.5rem 0 0.25rem; border-bottom: 2px solid #333; padding-bottom: 0.25rem; }
+    .section-note { color: #666; font-size: 0.8rem; margin: 0 0 0.5rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 0.35rem 0.5rem; border-bottom: 1px solid #e5e5e5; vertical-align: top; font-size: 0.9rem; }
+    th { font-size: 0.7rem; text-transform: uppercase; color: #666; }
+    tr { page-break-inside: avoid; }
+    .num { color: #999; width: 1.5rem; }
+    .prompt { font-weight: 700; }
+
+    @media print {
+        .toolbar { display: none; }
+        body { margin: 0; max-width: none; }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="toolbar">
+        <button type="button" class="btn btn-primary" onclick="window.print()">🖨 Print</button>
+        <a href="{{ path('admin_joke_print', {view: 'full', min_rating: minRating}) }}" class="btn {{ view == 'full' ? 'active' : '' }}">Full (keyword + joke)</a>
+        <a href="{{ path('admin_joke_print', {view: 'prompts', min_rating: minRating}) }}" class="btn {{ view == 'prompts' ? 'active' : '' }}">Prompts only</a>
+        {% for r in [1, 2, 3, 4] %}
+            <a href="{{ path('admin_joke_print', {view: view, min_rating: r}) }}" class="btn {{ minRating == r ? 'active' : '' }}">{{ r }}★+</a>
+        {% endfor %}
+        <a href="{{ path('admin_joke_index') }}" class="btn">← Back to list</a>
+    </div>
+
+    <h1>Dad Jokes — Camp Fantastic</h1>
+    <p class="subtitle">{{ little|length + big|length }} jokes at {{ minRating }}★ or better. Little-kid jokes are safe for everyone (lead with those if unsure) — big-kid/adult ones need an older audience.</p>
+
+    <h2>Little Kids — safe for any age ({{ little|length }})</h2>
+    <p class="section-note">Simple, concrete, no idioms or outside knowledge needed. Works on big kids and adults too.</p>
+    <table>
+        <thead>
+            <tr>
+                <th class="num">#</th>
+                <th>Prompt</th>
+                {% if view == 'full' %}<th>Joke</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for joke in little %}
+                <tr>
+                    <td class="num">{{ loop.index }}</td>
+                    <td class="prompt">{{ joke.keyword }}</td>
+                    {% if view == 'full' %}<td>{{ joke.joke }}</td>{% endif %}
+                </tr>
+            {% else %}
+                <tr><td colspan="{{ view == 'full' ? 3 : 2 }}">None at this rating.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Big Kids / Adults — needs an older audience ({{ big|length }})</h2>
+    <p class="section-note">Needs an idiom, abstract concept, or a bit of grown-up trivia to land. Great for the next party.</p>
+    <table>
+        <thead>
+            <tr>
+                <th class="num">#</th>
+                <th>Prompt</th>
+                {% if view == 'full' %}<th>Joke</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for joke in big %}
+                <tr>
+                    <td class="num">{{ loop.index }}</td>
+                    <td class="prompt">{{ joke.keyword }}</td>
+                    {% if view == 'full' %}<td>{{ joke.joke }}</td>{% endif %}
+                </tr>
+            {% else %}
+                <tr><td colspan="{{ view == 'full' ? 3 : 2 }}">None at this rating.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

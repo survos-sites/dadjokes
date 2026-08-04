@@ -57,6 +57,14 @@ final class SeedJokesCommand
         ['keyword' => 'Cookie Doctor / Feeling Crumby', 'joke' => 'Why did the cookie go to the doctor? Because it was feeling crumby.', 'category' => 'food', 'ageGroup' => 'little_kids'],
         ['keyword' => 'Pampered Cow / Spoiled Milk', 'joke' => 'What do you get from a pampered cow? Spoiled milk.', 'category' => 'food', 'ageGroup' => 'little_kids'],
 
+        // --- knock-knock, little kids ---
+        ['keyword' => 'Knock Knock / Boo Who', 'joke' => "Knock knock. Who's there? Boo. Boo who? Aww, don't cry, it's just a joke!", 'category' => 'knock-knock', 'ageGroup' => 'little_kids'],
+        ['keyword' => 'Knock Knock / Interrupting Cow', 'joke' => "Knock knock. Who's there? Interrupting cow. Interrupting cow wh— MOO!", 'category' => 'knock-knock', 'ageGroup' => 'little_kids'],
+        ['keyword' => 'Knock Knock / Orange You Glad', 'joke' => "Knock knock. Who's there? Orange. Orange who? Orange you glad I didn't say banana?", 'category' => 'knock-knock', 'ageGroup' => 'little_kids'],
+        ['keyword' => 'Knock Knock / Ice Scream', 'joke' => "Knock knock. Who's there? Ice cream. Ice cream who? Ice cream if you don't let me in!", 'category' => 'knock-knock', 'ageGroup' => 'little_kids'],
+        ['keyword' => 'Knock Knock / Tank Who', 'joke' => "Knock knock. Who's there? Tank. Tank who? You're welcome! And thank you all for letting me tell you these jokes!", 'category' => 'knock-knock', 'ageGroup' => 'little_kids'],
+        ['keyword' => 'Knock Knock / Bless You', 'joke' => "Knock knock. Who's there? Atch. Atch who? Bless you!", 'category' => 'knock-knock', 'ageGroup' => 'little_kids'],
+
         // --- big kids (need an idiom / abstract concept / grown-up trivia to land) ---
         ['keyword' => 'Time-Travel Joke / Didn\'t Like', 'joke' => 'I was going to tell a time-traveling joke, but you guys didn\'t like it.', 'category' => 'classic', 'ageGroup' => 'big_kids'],
         ['keyword' => 'Lightning / Struck Me', 'joke' => 'I was struggling to figure out how lightning works, but then it struck me.', 'category' => 'classic', 'ageGroup' => 'big_kids'],
@@ -71,6 +79,11 @@ final class SeedJokesCommand
         ['keyword' => 'Elevator First Time / Uplifting', 'joke' => "My first time using an elevator was an uplifting experience. The second time let me down.", 'category' => 'classic', 'ageGroup' => 'big_kids'],
         ['keyword' => 'Embrace Mistakes / A Hug', 'joke' => "I told my wife she should embrace her mistakes. She gave me a hug.", 'category' => 'classic', 'ageGroup' => 'big_kids'],
         ['keyword' => 'Termite Bar / Bar Tender', 'joke' => "A termite walks into a bar and asks, is the bar tender here?", 'category' => 'animals', 'ageGroup' => 'big_kids'],
+
+        // --- knock-knock, big kids ---
+        ['keyword' => 'Knock Knock / Alaska', 'joke' => "Knock knock. Who's there? Alaska. Alaska who? Alaska one more time, are you ready to go?", 'category' => 'knock-knock', 'ageGroup' => 'big_kids'],
+        ['keyword' => 'Knock Knock / Wooden Shoe', 'joke' => "Knock knock. Who's there? Wooden shoe. Wooden shoe who? Wooden shoe like to know!", 'category' => 'knock-knock', 'ageGroup' => 'big_kids'],
+        ['keyword' => 'Knock Knock / Cashew', 'joke' => "Knock knock. Who's there? Cash. Cash who? No thanks, I prefer peanuts!", 'category' => 'knock-knock', 'ageGroup' => 'big_kids'],
     ];
 
     public function __construct(

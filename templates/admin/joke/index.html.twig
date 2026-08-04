@@ -5,10 +5,13 @@
 {% block admin_content %}
     <div class="toolbar">
         <span>{{ jokes|length }} joke(s)</span>
-        <a href="{{ path('admin_joke_new') }}" class="btn btn-primary">+ New joke</a>
+        <div class="actions">
+            <a href="{{ path('admin_joke_print') }}" target="_blank" class="btn">🖨 Print (skips 1★)</a>
+            <a href="{{ path('admin_joke_new') }}" class="btn btn-primary">+ New joke</a>
+        </div>
     </div>
 
-    <p class="hint">Grouped by age (little kids first — those also work on big kids, never the reverse), ranked by star rating within each group. Use ↑/↓ to break ties or fine-tune order.</p>
+    <p class="hint">Grouped by age (little kids first — those also work on big kids, never the reverse). Click a star to rate. Use ↑/↓ to build your performance order within that age group — rating doesn't affect it.</p>
 
     <table>
         <thead>
@@ -28,18 +31,27 @@
                         <div class="reorder">
                             <form class="inline" method="post" action="{{ path('admin_joke_move_up', {id: joke.id}) }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token('move-joke-' ~ joke.id) }}">
-                                <button type="submit" class="btn btn-move" title="Move up" {{ loop.first ? 'disabled' : '' }}>&uarr;</button>
+                                <button type="submit" class="btn btn-move" title="Move up in set">&uarr;</button>
                             </form>
                             <form class="inline" method="post" action="{{ path('admin_joke_move_down', {id: joke.id}) }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token('move-joke-' ~ joke.id) }}">
-                                <button type="submit" class="btn btn-move" title="Move down" {{ loop.last ? 'disabled' : '' }}>&darr;</button>
+                                <button type="submit" class="btn btn-move" title="Move down in set">&darr;</button>
                             </form>
                         </div>
                     </td>
-                    <td>{{ joke.keyword }}</td>
-                    <td>{{ joke.joke }}</td>
+                    <td class="{{ joke.rating == 1 ? 'excluded' : '' }}">{{ joke.keyword }}</td>
+                    <td class="{{ joke.rating == 1 ? 'excluded' : '' }}">{{ joke.joke }}</td>
                     <td><span class="badge {{ joke.ageGroup == 'little_kids' ? 'badge-little' : 'badge-big' }}">{{ joke.ageGroup == 'little_kids' ? 'little kids' : 'big kids' }}</span></td>
-                    <td class="stars">{{ '★★★★'|slice(0, joke.rating) }}{{ '☆☆☆☆'|slice(0, 4 - joke.rating) }}</td>
+                    <td>
+                        <div class="star-picker">
+                            {% for n in 1..4 %}
+                                <form class="inline" method="post" action="{{ path('admin_joke_rate', {id: joke.id, stars: n}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('rate-joke-' ~ joke.id) }}">
+                                    <button type="submit" class="star-btn {{ n <= joke.rating ? 'star-on' : 'star-off' }}" title="Set {{ n }} star{{ n > 1 ? 's' : '' }}">★</button>
+                                </form>
+                            {% endfor %}
+                        </div>
+                    </td>
                     <td>
                         <div class="actions">
                             <a href="{{ path('admin_joke_edit', {id: joke.id}) }}" class="btn">Edit</a>

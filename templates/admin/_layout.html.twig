@@ -20,11 +20,15 @@
     .actions { display: flex; gap: 0.5rem; }
     .reorder { display: flex; flex-direction: column; gap: 0.15rem; }
     .btn-move { padding: 0.1rem 0.5rem; line-height: 1.4; font-size: 0.9rem; }
-    .btn-move:disabled { opacity: 0.3; cursor: default; }
     .badge-little { background: #e6f7e6; color: #1a7a1a; }
     .badge-big { background: #fdeee0; color: #b0530a; }
     .hint { color: #666; font-size: 0.85rem; margin: 0 0 0.5rem; }
-    .stars { color: #d9a400; letter-spacing: 1px; white-space: nowrap; }
+    .star-picker { display: flex; white-space: nowrap; }
+    .star-btn { border: none; background: none; cursor: pointer; font-size: 1.1rem; padding: 0 0.05rem; line-height: 1; }
+    .star-on { color: #d9a400; }
+    .star-off { color: #ccc; }
+    .star-btn:hover { transform: scale(1.15); }
+    .excluded { text-decoration: line-through; color: #999; }
 </style>
 {% endblock %}
 

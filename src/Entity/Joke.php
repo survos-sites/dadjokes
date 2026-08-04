@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Get(),
     ],
     normalizationContext: ['groups' => ['joke:read']],
-    order: ['ageGroup' => 'DESC', 'rating' => 'DESC', 'sortOrder' => 'ASC'],
+    order: ['ageGroup' => 'DESC', 'sortOrder' => 'ASC'],
     paginationItemsPerPage: 100,
 )]
 class Joke

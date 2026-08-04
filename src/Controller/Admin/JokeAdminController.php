@@ -31,6 +31,30 @@ final class JokeAdminController extends AbstractController
         ]);
     }
 
+    /**
+     * Print-ready view: grouped by age (little kids first), in Tac's manual
+     * ↑/↓ order, filtered to skip anything below min_rating (default 2 —
+     * skips 1-star jokes). ?view=prompts drops the punchline for self-testing.
+     */
+    #[Route('/print', name: 'print', methods: ['GET'])]
+    public function print(Request $request): Response
+    {
+        $view = $request->query->get('view') === 'prompts' ? 'prompts' : 'full';
+        $minRating = max(1, min(4, $request->query->getInt('min_rating', 2)));
+
+        $kept = array_filter(
+            $this->jokes->findAllOrdered(),
+            static fn (Joke $j) => $j->getRating() >= $minRating,
+        );
+
+        return $this->render('admin/joke/print.html.twig', [
+            'view' => $view,
+            'minRating' => $minRating,
+            'little' => array_values(array_filter($kept, static fn (Joke $j) => $j->getAgeGroup() === 'little_kids')),
+            'big' => array_values(array_filter($kept, static fn (Joke $j) => $j->getAgeGroup() === 'big_kids')),
+        ]);
+    }
+
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
@@ -73,6 +97,19 @@ final class JokeAdminController extends AbstractController
         ]);
     }
 
+    /** Click a star to set the rating directly (1-4). */
+    #[Route('/{id}/rate/{stars}', name: 'rate', methods: ['POST'], requirements: ['id' => '\d+', 'stars' => '[1-4]'])]
+    public function rate(Joke $joke, int $stars, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('rate-joke-' . $joke->getId(), (string) $request->request->get('_token'))) {
+            $joke->setRating($stars);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('admin_joke_index');
+    }
+
+    /** ↑/↓ reorder within the joke's own age group — this is how Tac builds a specific performance set. */
     #[Route('/{id}/move-up', name: 'move_up', methods: ['POST'], requirements: ['id' => '\d+'])]
     public function moveUp(Joke $joke, Request $request): Response
     {
@@ -89,21 +126,24 @@ final class JokeAdminController extends AbstractController
         return $this->redirectToRoute('admin_joke_index');
     }
 
-    /** Swaps sortOrder with the joke's neighbor in the current ordering — no gaps/renumbering needed. */
+    /** Swaps sortOrder with the nearest neighbor in the SAME age group — never crosses the little/big-kids boundary. */
     private function swapSortOrder(Joke $joke, Request $request, int $direction): void
     {
         if (!$this->isCsrfTokenValid('move-joke-' . $joke->getId(), (string) $request->request->get('_token'))) {
             return;
         }
 
-        $ordered = $this->jokes->findAllOrdered();
-        $index = array_search($joke, $ordered, true);
+        $group = array_values(array_filter(
+            $this->jokes->findAllOrdered(),
+            static fn (Joke $j) => $j->getAgeGroup() === $joke->getAgeGroup(),
+        ));
+        $index = array_search($joke, $group, true);
         $neighborIndex = $index + $direction;
-        if ($index === false || !isset($ordered[$neighborIndex])) {
+        if ($index === false || !isset($group[$neighborIndex])) {
             return;
         }
 
-        $neighbor = $ordered[$neighborIndex];
+        $neighbor = $group[$neighborIndex];
         [$a, $b] = [$joke->getSortOrder(), $neighbor->getSortOrder()];
         $joke->setSortOrder($b);
         $neighbor->setSortOrder($a);
