@@ -77,6 +77,17 @@
     padding: 0.5rem 1rem 0;
 }
 
+/* Plain (non-fill) F7 buttons render as bare text with no visible hit-area
+   boundary — fine with a mouse, easy to mis-tap on a phone. Give each a real
+   button box and a minimum 44px tap target (Apple/WCAG touch-target size). */
+.review-toolbar .button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--f7-theme-color, #007aff);
+    border-radius: 8px;
+}
+
 .keyboard-hint {
     text-align: center;
     font-size: 0.75rem;

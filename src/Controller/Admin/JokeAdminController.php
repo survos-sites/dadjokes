@@ -27,14 +27,14 @@ final class JokeAdminController extends AbstractController
     public function index(): Response
     {
         return $this->render('admin/joke/index.html.twig', [
-            'jokes' => $this->jokes->findBy([], ['category' => 'ASC', 'keyword' => 'ASC']),
+            'jokes' => $this->jokes->findAllOrdered(),
         ]);
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        $joke = new Joke('', '');
+        $joke = new Joke('', '', sortOrder: $this->jokes->nextSortOrder());
         $form = $this->createForm(JokeType::class, $joke);
         $form->handleRequest($request);
 
@@ -71,6 +71,43 @@ final class JokeAdminController extends AbstractController
             'joke' => $joke,
             'isNew' => false,
         ]);
+    }
+
+    #[Route('/{id}/move-up', name: 'move_up', methods: ['POST'], requirements: ['id' => '\d+'])]
+    public function moveUp(Joke $joke, Request $request): Response
+    {
+        $this->swapSortOrder($joke, $request, -1);
+
+        return $this->redirectToRoute('admin_joke_index');
+    }
+
+    #[Route('/{id}/move-down', name: 'move_down', methods: ['POST'], requirements: ['id' => '\d+'])]
+    public function moveDown(Joke $joke, Request $request): Response
+    {
+        $this->swapSortOrder($joke, $request, 1);
+
+        return $this->redirectToRoute('admin_joke_index');
+    }
+
+    /** Swaps sortOrder with the joke's neighbor in the current ordering — no gaps/renumbering needed. */
+    private function swapSortOrder(Joke $joke, Request $request, int $direction): void
+    {
+        if (!$this->isCsrfTokenValid('move-joke-' . $joke->getId(), (string) $request->request->get('_token'))) {
+            return;
+        }
+
+        $ordered = $this->jokes->findAllOrdered();
+        $index = array_search($joke, $ordered, true);
+        $neighborIndex = $index + $direction;
+        if ($index === false || !isset($ordered[$neighborIndex])) {
+            return;
+        }
+
+        $neighbor = $ordered[$neighborIndex];
+        [$a, $b] = [$joke->getSortOrder(), $neighbor->getSortOrder()];
+        $joke->setSortOrder($b);
+        $neighbor->setSortOrder($a);
+        $this->em->flush();
     }
 
     #[Route('/{id}/delete', name: 'delete', methods: ['POST'], requirements: ['id' => '\d+'])]

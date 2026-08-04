@@ -15,4 +15,24 @@ final class JokeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Joke::class);
     }
+
+    /**
+     * little_kids first (they're the safe, universal bucket — a little-kids
+     * joke also works on big kids, never the reverse), then by rating
+     * (highest-confidence jokes first), then sortOrder as a manual tiebreak.
+     *
+     * @return list<Joke>
+     */
+    public function findAllOrdered(): array
+    {
+        return $this->findBy([], ['ageGroup' => 'DESC', 'rating' => 'DESC', 'sortOrder' => 'ASC']);
+    }
+
+    public function nextSortOrder(): int
+    {
+        return 1 + (int) ($this->createQueryBuilder('j')
+            ->select('MAX(j.sortOrder)')
+            ->getQuery()
+            ->getSingleScalarResult() ?? 0);
+    }
 }

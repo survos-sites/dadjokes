@@ -8,21 +8,38 @@
         <a href="{{ path('admin_joke_new') }}" class="btn btn-primary">+ New joke</a>
     </div>
 
+    <p class="hint">Grouped by age (little kids first — those also work on big kids, never the reverse), ranked by star rating within each group. Use ↑/↓ to break ties or fine-tune order.</p>
+
     <table>
         <thead>
             <tr>
+                <th></th>
                 <th>Keyword</th>
                 <th>Joke</th>
-                <th>Category</th>
+                <th>Age</th>
+                <th>Rating</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             {% for joke in jokes %}
                 <tr>
+                    <td>
+                        <div class="reorder">
+                            <form class="inline" method="post" action="{{ path('admin_joke_move_up', {id: joke.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('move-joke-' ~ joke.id) }}">
+                                <button type="submit" class="btn btn-move" title="Move up" {{ loop.first ? 'disabled' : '' }}>&uarr;</button>
+                            </form>
+                            <form class="inline" method="post" action="{{ path('admin_joke_move_down', {id: joke.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('move-joke-' ~ joke.id) }}">
+                                <button type="submit" class="btn btn-move" title="Move down" {{ loop.last ? 'disabled' : '' }}>&darr;</button>
+                            </form>
+                        </div>
+                    </td>
                     <td>{{ joke.keyword }}</td>
                     <td>{{ joke.joke }}</td>
-                    <td><span class="badge">{{ joke.category }}</span></td>
+                    <td><span class="badge {{ joke.ageGroup == 'little_kids' ? 'badge-little' : 'badge-big' }}">{{ joke.ageGroup == 'little_kids' ? 'little kids' : 'big kids' }}</span></td>
+                    <td class="stars">{{ '★★★★'|slice(0, joke.rating) }}{{ '☆☆☆☆'|slice(0, 4 - joke.rating) }}</td>
                     <td>
                         <div class="actions">
                             <a href="{{ path('admin_joke_edit', {id: joke.id}) }}" class="btn">Edit</a>
@@ -34,7 +51,7 @@
                     </td>
                 </tr>
             {% else %}
-                <tr><td colspan="4">No jokes yet.</td></tr>
+                <tr><td colspan="6">No jokes yet.</td></tr>
             {% endfor %}
         </tbody>
     </table>

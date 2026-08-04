@@ -1,6 +1,14 @@
 import { Controller } from '@hotwired/stimulus';
 import { emptyCard, grade, Rating } from '../lib/fsrs.js';
 
+/** Mirrors the API's order: little_kids first (safe/universal), then by rating desc, then manual sortOrder. */
+function byBrowseOrder(a, b) {
+    if (a.ageGroup !== b.ageGroup) {
+        return a.ageGroup === 'little_kids' ? -1 : 1;
+    }
+    return b.rating - a.rating || a.sortOrder - b.sortOrder;
+}
+
 /*
 * Fully offline: jokes + progress both live in IndexedDB (seeded once from
 * /api/jokes by mobile-bundle's app controller via DbUtilities). Grading
@@ -17,6 +25,7 @@ export default class extends Controller {
 
     connect() {
         this.autoPlaying = false;
+        this.renderToken = 0;
         this.onKeydown = this.onKeydown.bind(this);
         window.addEventListener('keydown', this.onKeydown);
         this.element.addEventListener('page:init', () => this.loadNext());
@@ -187,8 +196,9 @@ export default class extends Controller {
     // --- Manual browse (arrow left/right): all cards, in order, no grading ---
 
     async navigateManual(direction) {
+        const token = ++this.renderToken;
         if (!this.allJokes || !this.allJokes.length) {
-            this.allJokes = (await window.db.jokes.toArray()).sort((a, b) => a.id - b.id);
+            this.allJokes = (await window.db.jokes.toArray()).sort(byBrowseOrder);
         }
         if (!this.allJokes.length) {
             return;
@@ -199,16 +209,28 @@ export default class extends Controller {
         const nextIndex = (currentIndex + direction + this.allJokes.length) % this.allJokes.length;
         const card = this.allJokes[nextIndex];
         const progress = (await window.db.progress.get(card.id)) ?? { id: card.id, ...emptyCard() };
+        if (token !== this.renderToken) {
+            return;
+        }
         this.currentProgress = progress;
-        await this.renderCard(card);
+        await this.renderCard(card, token);
     }
 
     // --- Rendering ---
 
-    async renderCard(card) {
+    /**
+     * Every navigation (grade/browse) stamps a fresh renderToken; if a newer
+     * navigation started while this one was awaiting IndexedDB, bail instead
+     * of clobbering it — fixes arrow-key browsing losing to an in-flight
+     * loadNext() from a just-tapped grade button.
+     */
+    async renderCard(card, token = ++this.renderToken) {
+        const stats = await this.getStats();
+        if (token !== this.renderToken) {
+            return;
+        }
         this.currentCard = card;
         this.cardTarget.classList.remove('flipped');
-        const stats = await this.getStats();
         this.applyLearnMode(!!stats.learnMode);
         this.frontTarget.textContent = card.keyword;
         this.backTarget.textContent = card.joke;
@@ -218,12 +240,13 @@ export default class extends Controller {
         if (!window.db) {
             return;
         }
+        const token = ++this.renderToken;
 
         const jokes = await window.db.jokes.toArray();
         if (!jokes.length) {
             return;
         }
-        this.allJokes = jokes.slice().sort((a, b) => a.id - b.id);
+        this.allJokes = jokes.slice().sort(byBrowseOrder);
 
         let progress = await window.db.progress.toArray();
         if (progress.length < jokes.length) {
@@ -242,6 +265,9 @@ export default class extends Controller {
             ? progress
             : progress.filter((p) => jokesById.get(p.id)?.category === category);
 
+        if (token !== this.renderToken) {
+            return;
+        }
         if (!scoped.length) {
             this.frontTarget.textContent = 'No cards in this set';
             this.backTarget.textContent = 'Pick a different set in Settings.';
@@ -259,7 +285,10 @@ export default class extends Controller {
         }
 
         this.currentProgress = next;
-        await this.renderCard(card);
+        await this.renderCard(card, token);
+        if (token !== this.renderToken) {
+            return;
+        }
         if (this.hasRemainingTarget) {
             const dueCount = scoped.filter((p) => new Date(p.due).getTime() <= Date.now()).length;
             this.remainingTarget.textContent = `${dueCount} due · ${scoped.length} total`;

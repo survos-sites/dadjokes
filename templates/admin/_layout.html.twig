@@ -16,8 +16,15 @@
     form.inline { display: inline; }
     .form-row { margin-bottom: 1rem; }
     .form-row label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
-    .form-row input[type=text], .form-row textarea { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
+    .form-row input[type=text], .form-row textarea, .form-row select { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
     .actions { display: flex; gap: 0.5rem; }
+    .reorder { display: flex; flex-direction: column; gap: 0.15rem; }
+    .btn-move { padding: 0.1rem 0.5rem; line-height: 1.4; font-size: 0.9rem; }
+    .btn-move:disabled { opacity: 0.3; cursor: default; }
+    .badge-little { background: #e6f7e6; color: #1a7a1a; }
+    .badge-big { background: #fdeee0; color: #b0530a; }
+    .hint { color: #666; font-size: 0.85rem; margin: 0 0 0.5rem; }
+    .stars { color: #d9a400; letter-spacing: 1px; white-space: nowrap; }
 </style>
 {% endblock %}
 
